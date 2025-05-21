@@ -4,14 +4,15 @@ trigger:
 variables:
   IAMGE_NAME: "cloudbennie/azure_devops_demo"
 
+pool:
+  vmImage: ubuntu-latest
+
 stages:
 - stage: Build
   displayName: Build image
   jobs:
   - job: Build
     displayName: Build
-    pool:
-      vmImage: ubuntu-latest
     steps:
     - task: Docker@1
       displayName: Build an image
@@ -24,3 +25,17 @@ stages:
       inputs:
         containerRegistry: 'dockerhub-connection'
         repository: $(IAMGE_NAME)
+
+- stage: Deploy
+  displayName: Deploy image
+  jobs:
+  - job: Deploy
+    displayName: Deploy
+    steps:
+    - task: AzureContainerApps@1
+      inputs:
+        azureSubscription: 'Azure subscription 1(c3fcc619-1d73-49dd-9e2f-42d5051a2d3a)'
+        containerAppName: 'azure-devops-demo'
+        resourceGroup: 'my-rg'
+        targetPort: '8080'
+        ingress: 'external'
