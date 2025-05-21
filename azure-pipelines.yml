@@ -18,6 +18,6 @@ stages:
       displayName: Build an image
       inputs:
         command: build
-        dockerfile: '${Build.SourcesDirectory}/Dockerfile'
+        dockerfile: 'Dockerfile'
         restartPolicy: ${image_name}
         tags: $(tag)
