@@ -1,0 +1,23 @@
+trigger:
+- main
+
+variables:
+  tag: '$(Build.BuildId)'
+  image_name: "cloudbennie/azure_devops_demo"
+
+stages:
+- stage: Build
+  displayName: Build image
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: Docker@1
+      displayName: Build an image
+      inputs:
+        command: build
+        dockerfile: '${Build.SourceDirectory}/Dockerfile'
+        restartPolicy: ${image_name}
+        tags: $(tag)
