@@ -39,6 +39,7 @@ stages:
       inputs:
         azureSubscription: 'Azure subscription 1(c3fcc619-1d73-49dd-9e2f-42d5051a2d3a)'
         imageToDeploy: "$(IAMGE_NAME):$(TAG)"
+        containerAppEnvironment: “managedEnvironment-myrg-b9e6”
         containerAppName: 'azure-devops-demo'
         resourceGroup: 'my-rg'
         targetPort: '8080'
