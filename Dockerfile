@@ -1,19 +1,17 @@
-# 构建阶段
-FROM golang:1.24 as builder
+FROM golang:1.24-alpine as builder
 
 WORKDIR /app
 
-# 先拷贝 go.mod 和 go.sum，有利于缓存
-COPY go.mod go.sum ./
+# 安装 Git（go get 需要）
+RUN apk add --no-cache git
 
-# 下载依赖
+COPY go.mod go.sum ./
 RUN go mod download
 
-# 再拷贝代码
 COPY . .
 
-# 构建
-RUN go build -o app
+# 静态编译，防止 musl 与 glibc 不兼容
+RUN go build -o app -ldflags="-w -s" .
 
 # 运行阶段
 FROM alpine:latest
@@ -24,5 +22,7 @@ WORKDIR /root/
 
 COPY --from=builder /app/app .
 
-CMD ["./app"]
+# 确保是可执行文件
+RUN chmod +x ./app
 
+CMD ["./app"]
