@@ -2,8 +2,8 @@ trigger:
 - main
 
 variables:
-  tag: '$(Build.BuildId)'
-  image_name: "cloudbennie/azure_devops_demo"
+  TAG: '$(Build.BuildId)'
+  IAMGE_NAME: "cloudbennie/azure_devops_demo"
 
 stages:
 - stage: Build
@@ -19,13 +19,13 @@ stages:
       inputs:
         command: build
         dockerfile: 'Dockerfile'
-        imageName: ${image_name}'
-        tags: $(tag)
+        repository: ${IAMGE_NAME}'
+        tags: $(TAG)
     - task: Docker@2
       displayName: Push an image
       inputs:
         containerRegistry: 'dockerhub-connection'
-        repository: '${image_name}'
+        repository: '${IAMGE_NAME}'
         command: 'push'
-        tags: $(tag)
+        tags: $(TAG)
     
