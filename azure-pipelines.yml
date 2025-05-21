@@ -24,5 +24,3 @@ stages:
       inputs:
         containerRegistry: 'dockerhub-connection'
         repository: $(IAMGE_NAME)
-        command: push
-    
