@@ -45,6 +45,6 @@ stages:
         targetPort: '8080'
         ingress: 'external'
         containerRegistryType: 'otherContainerRegistry'
-        registryServer: 'docker.io'
+        registryServer: 'registry.hub.docker.com'
         registryUsername: '$(DOCKER_HUB_USERNAME)'
         registryPassword: '$(DOCKER_HUB_PASSWORD)'
