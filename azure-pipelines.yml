@@ -9,25 +9,25 @@ pool:
   vmImage: ubuntu-latest
 
 stages:
-- stage: Build
-  displayName: Build image
-  jobs:
-  - job: Build
-    displayName: Build
-    steps:
-    - task: Docker@1
-      displayName: Build an image
-      inputs:
-        dockerfile: 'Dockerfile'
-        repository: $(IAMGE_NAME)
-        command: build
-        tags: $(TAG)
-    - task: Docker@2
-      displayName: Push an image
-      inputs:
-        containerRegistry: 'dockerhub-connection'
-        repository: $(IAMGE_NAME)
-        tags: $(TAG)
+# - stage: Build
+#   displayName: Build image
+#   jobs:
+#   - job: Build
+#     displayName: Build
+#     steps:
+#     - task: Docker@1
+#       displayName: Build an image
+#       inputs:
+#         dockerfile: 'Dockerfile'
+#         repository: $(IAMGE_NAME)
+#         command: build
+#         tags: $(TAG)
+#     - task: Docker@2
+#       displayName: Push an image
+#       inputs:
+#         containerRegistry: 'dockerhub-connection'
+#         repository: $(IAMGE_NAME)
+#         tags: $(TAG)
 
 - stage: Deploy
   displayName: Deploy image
@@ -38,7 +38,7 @@ stages:
     - task: AzureContainerApps@1
       inputs:
         azureSubscription: 'Azure subscription 1(c3fcc619-1d73-49dd-9e2f-42d5051a2d3a)'
-        imageToDeploy: "docker.io/$(IAMGE_NAME):$(TAG)"
+        imageToDeploy: "docker.io/library/nginx:latest"
         containerAppEnvironment: “managedEnvironment-myrg-b9e6”
         containerAppName: 'azure-devops-demo'
         resourceGroup: 'my-rg'
