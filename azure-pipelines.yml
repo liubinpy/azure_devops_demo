@@ -38,7 +38,7 @@ stages:
     - task: AzureContainerApps@1
       inputs:
         azureSubscription: 'Azure subscription 1(c3fcc619-1d73-49dd-9e2f-42d5051a2d3a)'
-        imageToDeploy: "$(IAMGE_NAME):$(TAG)"
+        imageToDeploy: "docker.io/$(IAMGE_NAME):$(TAG)"
         containerAppEnvironment: “managedEnvironment-myrg-b9e6”
         containerAppName: 'azure-devops-demo'
         resourceGroup: 'my-rg'
