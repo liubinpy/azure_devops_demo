@@ -38,13 +38,14 @@ stages:
     - task: AzureContainerApps@1
       inputs:
         azureSubscription: 'Azure subscription 1(c3fcc619-1d73-49dd-9e2f-42d5051a2d3a)'
-        imageToDeploy: "docker.io/library/nginx:latest"
+        imageToDeploy: "docker.io/cloudbennie/azure_devops_demo:13"
         containerAppEnvironment: “managedEnvironment-myrg-b9e6”
         containerAppName: 'azure-devops-demo'
         resourceGroup: 'my-rg'
         targetPort: '8080'
         ingress: 'external'
+        # 添加这部分以支持私有镜像认证
         containerRegistryType: 'otherContainerRegistry'
-        registryServer: 'registry.hub.docker.com'
-        registryUsername: '$(DOCKER_HUB_USERNAME)'
-        registryPassword: '$(DOCKER_HUB_PASSWORD)'
+        registryServer: 'docker.io'
+        registryUsername: '$(DOCKER_HUB_USERNAME)'      # Secret 变量
+        registryPassword: '$(DOCKER_HUB_PASSWORD)'      # Secret 变量
