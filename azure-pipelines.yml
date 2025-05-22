@@ -44,12 +44,12 @@ stages:
         inlineScript: |
           # 设置 Docker Hub 凭据为容器应用 Secret
           az containerapp secret set -n azure-devops-demo -g my-rg --secrets \
-            DOCKERHUB_USER=$(DOCKER_HUB_USERNAME) DOCKERHUB_PASS=$(DOCKER_HUB_PASSWORD)
+            DOCKERHUB_USER=$(dockerHubUsername) DOCKERHUB_PASS=$(dockerHubPassword)
           # 更新容器应用指定私有镜像，并使用注册表凭据
           az containerapp update \
             -n azure-devops-demo -g my-rg \
             --image docker.io/cloudbennie/azure_devops_demo:13 \
             --registry-server registry.hub.docker.com \
-            --registry-username $(DOCKER_HUB_USERNAME) \
-            --registry-password $(DOCKER_HUB_PASSWORD)
+            --registry-username $(dockerHubUsername) \
+            --registry-password $(dockerHubPassword)
 
