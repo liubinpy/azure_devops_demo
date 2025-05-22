@@ -2,7 +2,7 @@ trigger:
 - main
 
 variables:
-  IAMGE_NAME: "registry.hub.docker.com/cloudbennie/azure_devops_demo"
+  IAMGE_NAME: "cloudbennie/azure_devops_demo"
   TAG: "$(Build.BuildId)"
   CONTAINER_APPS_NAME: "azure-devops-demo"
   RESOURCE_GROUP: "my-rg"
@@ -48,4 +48,4 @@ stages:
         scriptLocation: 'inlineScript'
         inlineScript: |
           az config set extension.use_dynamic_install=yes_without_prompt
-          az containerapp up -n "$(CONTAINER_APPS_NAME)" -g "RESOURCE_GROUP" --image "$(IAMGE_NAME):$(TAG)" --environment $(ENVIRONMENT) --ingress external --target-port $(TARGET_PORT) --registry-username $(DOCKER_HUB_USERNAME) --registry-password $(DOCKER_HUB_PASSWORD) --registry-server $(REGISTER_SERVER)
+          az containerapp up -n "$(CONTAINER_APPS_NAME)" -g "RESOURCE_GROUP" --image "$(REGISTER_SERVER)/$(IAMGE_NAME):$(TAG)" --environment $(ENVIRONMENT) --ingress external --target-port $(TARGET_PORT) --registry-username $(DOCKER_HUB_USERNAME) --registry-password $(DOCKER_HUB_PASSWORD) --registry-server $(REGISTER_SERVER)
