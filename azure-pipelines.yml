@@ -42,15 +42,13 @@ stages:
           # Write your commands here
           
           echo $(DOCKER_HUB_USERNAME)
-    - task: AzureContainerApps@1
+
+    - task: AzureCLI@2
+      displayName: 'Azure CLI '
       inputs:
         azureSubscription: 'Azure subscription 1(c3fcc619-1d73-49dd-9e2f-42d5051a2d3a)'
-        imageToDeploy: "cloudbennie/azure_devops_demo:13"
-        containerAppEnvironment: “managedEnvironment-myrg-b9e6”
-        containerAppName: 'azure-devops-demo'
-        resourceGroup: 'my-rg'
-        targetPort: '8080'
-        ingress: 'external'
-        registryUrl: "registry.hub.docker.com"
-        registryUsername: "$(DOCKER_HUB_USERNAME)"
-        registryPassword: "$(DOCKER_HUB_PASSWORD)"
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          az config set extension.use_dynamic_install=yes_without_prompt
+          az containerapp up -n 'azure-devops-demo' -g 'my-rg' --image "cloudbennie/azure_devops_demo:13" --environment "managedEnvironment-myrg-b9e6" --ingress external --target-port 8080 --registry-username $(DOCKER_HUB_USERNAME) --registry-password $(DOCKER_HUB_PASSWORD) --registry-server hub.docker.com
