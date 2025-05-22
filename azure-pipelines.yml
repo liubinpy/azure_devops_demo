@@ -36,20 +36,23 @@ stages:
     displayName: Deploy
     steps:
     - task: AzureCLI@2
-      displayName: 'Deploy Container App with Docker Hub image'
+      displayName: 'Deploy to Azure Container App using Docker Hub image'
       inputs:
         azureSubscription: 'Azure subscription 1(c3fcc619-1d73-49dd-9e2f-42d5051a2d3a)'
-        scriptType: bash
+        scriptType: 'bash'
         scriptLocation: 'inlineScript'
         inlineScript: |
-          # 设置 Docker Hub 凭据为容器应用 Secret
-          az containerapp secret set -n azure-devops-demo -g my-rg --secrets \
-            DOCKERHUB_USER=$(dockerHubUsername) DOCKERHUB_PASS=$(dockerHubPassword)
-          # 更新容器应用指定私有镜像，并使用注册表凭据
+          echo "Setting secrets..."
+          az containerapp secret set \
+            -n azure-devops-demo \
+            -g my-rg \
+            --secrets dockerhub-user=$(dockerHubUsername) dockerhub-pass=$(dockerHubPassword)
+
+          echo "Updating container app..."
           az containerapp update \
-            -n azure-devops-demo -g my-rg \
+            -n azure-devops-demo \
+            -g my-rg \
             --image docker.io/cloudbennie/azure_devops_demo:13 \
             --registry-server registry.hub.docker.com \
             --registry-username $(dockerHubUsername) \
             --registry-password $(dockerHubPassword)
-
