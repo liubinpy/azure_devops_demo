@@ -44,6 +44,6 @@ stages:
         resourceGroup: 'my-rg'
         targetPort: '8080'
         ingress: 'external'
-        registryUrl: "docker.io"
+        registryUrl: "registry.hub.docker.com"
         registryUsername: "$(DOCKER_HUB_USERNAME)"
         registryPassword: "$(DOCKER_HUB_PASSWORD)"
