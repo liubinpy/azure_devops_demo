@@ -48,4 +48,4 @@ stages:
         scriptLocation: 'inlineScript'
         inlineScript: |
           az config set extension.use_dynamic_install=yes_without_prompt
-          az containerapp up -n "$(CONTAINER_APPS_NAME)" -g "RESOURCE_GROUP" --image "$(REGISTER_SERVER)/$(IAMGE_NAME):$(TAG)" --environment $(ENVIRONMENT) --ingress external --target-port $(TARGET_PORT) --registry-username $(DOCKER_HUB_USERNAME) --registry-password $(DOCKER_HUB_PASSWORD) --registry-server $(REGISTER_SERVER)
+          az containerapp up -n "$(CONTAINER_APPS_NAME)" -g "$(RESOURCE_GROUP)" --image "$(REGISTER_SERVER)/$(IAMGE_NAME):$(TAG)" --environment $(ENVIRONMENT) --ingress external --target-port $(TARGET_PORT) --registry-username $(DOCKER_HUB_USERNAME) --registry-password $(DOCKER_HUB_PASSWORD) --registry-server $(REGISTER_SERVER)
