@@ -35,6 +35,13 @@ stages:
   - job: Deploy
     displayName: Deploy
     steps:
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          # Write your commands here
+          
+          echo $(DOCKER_HUB_USERNAME)
     - task: AzureContainerApps@1
       inputs:
         azureSubscription: 'Azure subscription 1(c3fcc619-1d73-49dd-9e2f-42d5051a2d3a)'
