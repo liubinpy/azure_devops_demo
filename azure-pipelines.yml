@@ -51,4 +51,4 @@ stages:
         scriptLocation: 'inlineScript'
         inlineScript: |
           az config set extension.use_dynamic_install=yes_without_prompt
-          az containerapp up -n 'azure-devops-demo' -g 'my-rg' --image "cloudbennie/azure_devops_demo:13" --environment "managedEnvironment-myrg-b9e6" --ingress external --target-port 8080 --registry-username $(DOCKER_HUB_USERNAME) --registry-password $(DOCKER_HUB_PASSWORD) --registry-server hub.docker.com
+          az containerapp up -n 'azure-devops-demo' -g 'my-rg' --image "cloudbennie/azure_devops_demo:13" --environment "managedEnvironment-myrg-b9e6" --ingress external --target-port 8080 --registry-username $(DOCKER_HUB_USERNAME) --registry-password $(DOCKER_HUB_PASSWORD) --registry-server registry.hub.docker.com
