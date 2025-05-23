@@ -1,5 +1,5 @@
 trigger:
-- main
+- none
 
 variables:
   IAMGE_NAME: "cloudbennie/azure_devops_demo"
