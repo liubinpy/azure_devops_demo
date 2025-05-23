@@ -30,3 +30,20 @@ stages:
           az acr login --name azurebennie
           docker push $(IAMGE_NAME):$(TAG)
 
+- stage: Deploy
+  displayName: deploy to aks
+  jobs:
+  - job: deploy
+    displayName: deploy 
+    steps:
+    - task: Kubernetes@1
+      inputs:
+        connectionType: 'Azure Resource Manager'
+        azureSubscriptionEndpoint: 'Azure subscription 1(c3fcc619-1d73-49dd-9e2f-42d5051a2d3a)'
+        azureResourceGroup: 'my-rg'
+        kubernetesCluster: 'my-demo'
+        namespace: 'demo'
+        command: 'set'
+        arguments: 'image deployment/go-demo go-demo=$(IAMGE_NAME):$(TAG)'
+        secretType: 'dockerRegistry'
+        containerRegistryType: 'Azure Container Registry'
