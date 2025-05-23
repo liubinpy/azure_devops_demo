@@ -1,0 +1,51 @@
+trigger:
+- main
+
+variables:
+  IAMGE_NAME: "cloudbennie/azure_devops_demo"
+  TAG: "$(Build.BuildId)"
+  CONTAINER_APPS_NAME: "azure-devops-demo"
+  RESOURCE_GROUP: "my-rg"
+  ENVIRONMENT: "managedEnvironment-myrg-b9e6"
+  REGISTER_SERVER: "registry.hub.docker.com"
+  TARGET_PORT: 8080
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+- stage: Build
+  displayName: Build image
+  jobs:
+  - job: Build
+    displayName: Build
+    steps:
+    - task: Docker@1
+      displayName: Build an image
+      inputs:
+        dockerfile: 'Dockerfile'
+        repository: $(IAMGE_NAME)
+        command: build
+        tags: $(TAG)
+    - task: Docker@2
+      displayName: Push an image
+      inputs:
+        containerRegistry: 'dockerhub-connection'
+        repository: $(IAMGE_NAME)
+        tags: $(TAG)
+
+- stage: Deploy
+  displayName: Deploy image
+  jobs:
+  - job: Deploy
+    displayName: Deploy
+    steps:
+    - task: AzureCLI@2
+      displayName: 'Azure CLI '
+      inputs:
+        azureSubscription: 'Azure subscription 1(c3fcc619-1d73-49dd-9e2f-42d5051a2d3a)'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          az config set extension.use_dynamic_install=yes_without_prompt
+          az containerapp up -n "$(CONTAINER_APPS_NAME)" -g "$(RESOURCE_GROUP)" --image "$(REGISTER_SERVER)/$(IAMGE_NAME):$(TAG)" --environment $(ENVIRONMENT) --ingress external --target-port $(TARGET_PORT) --registry-username $(DOCKER_HUB_USERNAME) --registry-password $(DOCKER_HUB_PASSWORD) --registry-server $(REGISTER_SERVER)
