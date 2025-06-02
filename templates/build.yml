@@ -1,7 +1,12 @@
 # File: templates/build.yml
+
+parameters:
+- name: buildcmd  # defaults for any parameters that aren't specified
+  default: ''
+
 stages:
 - stage: Build
   jobs:
   - job: Build
     steps:
-    - script: echo "打包代码"
+    - script: echo "运行打包命令: ${{ parameters.buildcmd }}"
