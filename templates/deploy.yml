@@ -1,0 +1,7 @@
+# File: templates/deploy.yml
+stages:
+- stage: Deploy
+  jobs:
+  - job: Deploy
+    steps:
+    - script: echo "发布代码"
