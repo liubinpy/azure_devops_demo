@@ -1,7 +1,12 @@
 # File: templates/checkout.yml
+
+parameters:
+- name: branch  # defaults for any parameters that aren't specified
+  default: 'main'
+  
 stages:
 - stage: Checkout
   jobs:
   - job: Checkout
     steps:
-    - script: echo "拉取代码"
+    - script: echo "拉取${{ parameters.branch }}的代码"
