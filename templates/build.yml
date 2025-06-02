@@ -9,4 +9,5 @@ stages:
   jobs:
   - job: Build
     steps:
-    - script: echo "运行打包命令: ${{ parameters.buildcmd }}"
+  - script: |
+      echo "运行打包命令: ${{ parameters.buildcmd }}"
