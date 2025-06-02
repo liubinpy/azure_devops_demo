@@ -7,5 +7,9 @@ pool:
 
 stages:
 - template: templates/checkout.yml 
+  parameters:
+    branch: "dev"
 - template: templates/build.yml 
+  parameters:
+    buildcmd: "npm run build"
 - template: templates/deploy.yml 
