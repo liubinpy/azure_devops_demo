@@ -1,0 +1,7 @@
+# File: templates/build.yml
+stages:
+- stage: Build
+  jobs:
+  - job: Build
+    steps:
+    - script: echo "打包代码"
