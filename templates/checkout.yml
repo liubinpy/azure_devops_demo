@@ -1,0 +1,7 @@
+# File: templates/checkout.yml
+stages:
+- stage: Checkout
+  jobs:
+  - job: Checkout
+    steps:
+    - script: echo "拉取代码"
