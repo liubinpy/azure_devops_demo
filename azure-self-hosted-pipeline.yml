@@ -1,0 +1,26 @@
+trigger:
+- none
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+- stage: Build
+  displayName: Build image
+  jobs:
+  - job: Build
+    displayName: Build
+    steps:
+    - task: Docker@1
+      displayName: Build an image
+      inputs:
+        dockerfile: 'Dockerfile'
+        repository: $(IAMGE_NAME)
+        command: build
+        tags: $(TAG)
+    - task: Docker@2
+      displayName: Push an image
+      inputs:
+        containerRegistry: 'dockerhub-connection'
+        repository: $(IAMGE_NAME)
+        tags: $(TAG)
