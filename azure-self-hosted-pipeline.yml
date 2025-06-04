@@ -2,25 +2,17 @@ trigger:
 - none
 
 pool:
-  vmImage: ubuntu-latest
+  name: my-mac
 
 stages:
-- stage: Build
-  displayName: Build image
+- stage: echo
   jobs:
-  - job: Build
-    displayName: Build
+  - job: Echo
     steps:
-    - task: Docker@1
-      displayName: Build an image
+    - task: Bash@3
       inputs:
-        dockerfile: 'Dockerfile'
-        repository: $(IAMGE_NAME)
-        command: build
-        tags: $(TAG)
-    - task: Docker@2
-      displayName: Push an image
-      inputs:
-        containerRegistry: 'dockerhub-connection'
-        repository: $(IAMGE_NAME)
-        tags: $(TAG)
+        targetType: 'inline'
+        script: |          
+          echo 'Hello world'
+          pwd
+          ls -l
