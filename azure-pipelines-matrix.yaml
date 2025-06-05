@@ -28,22 +28,10 @@ stages:
         WindowsServer2022:
           imageName: 'windows-2022'
           script: 'set'
-        WindowsServer2019:
-          imageName: 'windows-2019'
-          script: 'set'
         ubuntu-22-04:
           imageName: 'ubuntu-22.04'
           script: 'printenv'
-        ubuntu-20-04:
-          imageName: 'ubuntu-20.04'
-          script: 'printenv'
-        macos-12-monterey:
-          imageName: 'macOS-12'
-          script: 'printenv'
-        macos-11-bigsur:
-          imageName: 'macOS-11'
-          script: 'printenv'
-      maxParallel: 6
+      maxParallel: 2
     pool:
       vmImage: $(imageName)
     steps:
